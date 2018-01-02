@@ -23,3 +23,31 @@
 -for checking differences (git diff)
 
 =====================================================================
+-creating and updating files in remote we have to follow following status
+
+-after creating repo in remote like github we have to setup for the fist time 
+	-command: git remote add origin [url] -> url should be replaced by unique url 
+-for checking 
+	git remote -v
+
+-now we can try to push data 
+	git push --set-upstream origin master
+
+ (this operation may ask for the username and password)
+
+-but this will give us the error because lisense file is in remote repo (if we have created lisence in the remote)
+
+-before doing push we have to pull data to the local folder 
+	git branch --set-upstream-to=origin/master
+
+	-but the pulling might get error with (git pull) because of unrelated history
+
+	-so we can use 
+		git pull --allow-unrelated-histories
+
+-now we can push using (git push)
+
+=================================================================================
+
+
+
