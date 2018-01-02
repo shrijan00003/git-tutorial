@@ -1,0 +1,15 @@
+==================================================
+-to check whether git is install git or not (git --version) 
+-for download we can go to (git-scm.com)
+-check configuration (git config --list)
+-for email address and username 
+    git config --global user.name "shrijannn"
+    git config --global user.email shrijan00003@gmail.com
+
+-for checking username
+	git config user.name
+
+-to get specific help then 
+	git help config
+
+-press (:q) to quit from vim code editor
