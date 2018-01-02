@@ -1,4 +1,4 @@
-==================================================
+==============================================================
 -to check whether git is install git or not (git --version) 
 -for download we can go to (git-scm.com)
 -check configuration (git config --list)
@@ -13,3 +13,13 @@
 	git help config
 
 -press (:q) to quit from vim code editor
+
+==================================================================
+-for using git we have to go to the folder with cd 
+-for initialize we have to use command (git init)
+-to check the status (git status)
+-for adding files (git add .)
+-for commiting (git commit -m "initial commit") -m stands for message
+-for checking differences (git diff)
+
+=====================================================================
