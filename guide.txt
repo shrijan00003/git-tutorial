@@ -1,4 +1,5 @@
 ==============================================================
+GITHUB
 -to check whether git is install git or not (git --version) 
 -for download we can go to (git-scm.com)
 -check configuration (git config --list)
