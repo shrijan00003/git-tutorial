@@ -1,0 +1,89 @@
+============================setting up database=====================================================
+we just have to create the databse in phpmyadmin all other stuffs can be handled with laravel model and migration
+we can make controller plural and model singlur like PostsController and Post and model
+--php artisan make:model Post -m -- this is the command for making model along with migration 
+create_posts_table migration will be created automaticaly with the previous command 
+---------------------------------------------------------------------
+we can add necessary field to the migration created.. 
+public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->mediumText('body');
+            $table->timestamps();
+        });
+    }
+
+---------------------------------------------------------------------------
+we can have error on string length and to set default String length 
+goto App->Providers->AppServiceProvier.php and use following code 
+ use Illuminate\Support\Facades\Schema; (pakage)
+ Schema::defaultStringLenght(255); (in boot function)
+
+ ---------------------------------------------------------------------------
+ finally we have to setup the .env file for our database details..
+ ----------------------------------------------------------------------------
+ now we are ready to goto migrate our migration.
+ command
+  php artisan migrate
+ 
+ and remember we dont have to mention the collation while creating db laravel will
+ handle all of that stuff 
+ ----------------------------------------------------------------------------
+using artisan tinker for inserting/selecting data to/from table 
+--php artisan tinker
+-using tinker we can insert or select data of database using our model 
+--App\Post::count(); will count if we have data with Post model
+
+ $post=new App\Post();  -This will create instance of Post model
+=> App\Post {#756}
+>>> $post->title='Post One'  -assign vaule to title
+=> "Post One"
+>>> $post->body='This is the first post body'; -assign value to body
+=> "This is the first post body"
+>>> $post->save();  -save 
+=> true
+>>>
+
+we can follow same procedure for inserting how many data we want to store on table for initial 
+data.
+>>> $post=new App\Post();
+=> App\Post {#756}
+>>> $post->title='Post One'
+=> "Post One"
+>>> $post->body='This is the first post body';
+=> "This is the first post body"
+>>> $post->save();
+=> true
+>>> $post=new App\Post();
+=> App\Post {#760}
+>>> $post->title='Second Post';
+=> "Second Post"
+>>> $post->body='This is second post';
+=> "This is second post"
+>>> $post->save();
+=> true
+>>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

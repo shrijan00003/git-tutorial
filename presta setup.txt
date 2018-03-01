@@ -1,0 +1,6 @@
+Install and enable the intl extension (used for validators).
+Install and/or enable a PHP accelerator (highly recommended).
+Setting "realpath_cache_size" to e.g. "5242880" or "5M" in php.ini* may improve performance on Windows significantly in some cases.
+
+link for setup error handeling:
+http://forge.prestashop.com/browse/BOOM-4557

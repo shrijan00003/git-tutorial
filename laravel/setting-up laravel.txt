@@ -1,0 +1,38 @@
+=========================SETTING UP LARAVEL PROJECT=========================================
+we can see the documentation for the laravel installation but we might got confusion so that 
+we are writing this documentaiton.. 
+-composer create-project laravel/laravel <project_name>
+-this will take some time to install all package for you .. 
+
+===========now we have to setup the virtual host=============================
+===========some example of simple routing====================================
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/hello', function () {
+    return "hello world";
+});
+Route::get('/about', function () {
+    return view('pages.about');
+});
+Route::get('/users/{id}', function ($id) {
+    return 'user id is '.$id;
+});
+Route::get('/users/{id}/{name}', function ($id,$name) {
+    return 'user id is '.$id.' this is name '.$name;
+});
+
+=====================================================================
+making controller with artisan command 
+$ php artisan make:controller <PagesController>
+
+==============================================
+Setting up route for calling views through controller 
+Route::get('/','pagescontroller@index');
+Route::get('/about','pagescontroller@about');
+Route::get('/services','pagescontroller@services');
+
+where first parameter is the controller and the second parameter after @ is function on that controller 
+calling view.
+
+====================================================

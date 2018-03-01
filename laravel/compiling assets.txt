@@ -1,0 +1,25 @@
+====================comiling assets=========================
+-we can find find css and js inside our public folder 
+-by default laravel include bootstrap css within it
+-for using sass and other compilation we have to install NODE packages and for that 
+ we have to install NPM (NODE package MANAGER)
+ for installing npm we have to download the node from web and we can use the command 
+ ---npm install 
+ this will take some time to download all the files and dependencies 
+ ---------------------------------------------------------------------
+ --for simply linking css we can use following html tag with blade syntax
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    this will get css from public->css->app.css
+-----------------------------------------------------------------------
+for recompiling the changes in any assets folder sass or any javascript file 
+we have to run the command --- npm run dev 
+this have to be done contineuoulsy and it will check all the files in resources folder and and compile so it will 
+take long time.
+--------------------------------------------------------------------------------
+npm run watch---- is so used so that it will find the changed file and compile that only.
+--------------------------------------------------------------------------------
+for creating custom css we have to make some custom scss file in sass folder 
+and import that file in app.scss 
+
+
+

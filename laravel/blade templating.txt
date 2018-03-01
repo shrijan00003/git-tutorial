@@ -1,0 +1,72 @@
+========================blade templating tutorials===========================
+using blade templating we dont have to write repetative code like footer and header 
+we can make layout and extend that layout for other views 
+for example
+--------------------------------
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{{config('app.name','BOOK AND TRIP')}}</title>
+    </head>
+    <body>
+        @yield('content');
+    </body>
+</html>
+--------------------------------------
+This is the layout we have created in layout folder and we are using this in other views like below
+---------------------------------------
+@extends('layouts.app')
+@section('content')
+    <H1>wELCOME TO LARAVEL</H1>
+    <P>tHIS IS THE LARAVEL APPLICATION FROM THE LARAVEL FROM SCRACH FROM YOUTUBE SERIOES </P>
+@endsection
+-----------------------------------------
+-where @extends annotation will extend the app.blade.php that is in layouts folder or directory
+-and section will extend the section that was yielded in layout file. 
+------------------------------------------
+
+=================passing values to views from controller=====================
+1. we can use compact() function from controller module
+-------------------------
+public function index(){
+        $title="welcome to laravel";
+        return view('pages.index',compact('title'));
+    }
+-------------------------
+and we can get this in view like 
+--------------------------
+ <H1>{{$title}}</H1>
+ ------------------------
+
+ 2. Another way to pass the values to the view is with ->with() method like 
+ ----------------------
+ return view('pages.index')->with('title',$title);
+ -the way for retriving the value is same as previous
+ ---------------------------
+ we can pass multiple values as array like this
+ ----------------------------
+  $data=array(
+            'title'=>'Services',
+            'services'=>['programming','dbms','seo']
+        );
+        return view('pages.services')->with($data);
+----------------------------------
+and call them in views like 
+---------------------------------
+<H1>{{$title}}</H1>
+    @if(count($services)>0)
+     <ul>
+         @foreach($services as $service)
+         <li>{{$service}}</li>
+         @endforeach
+     </ul>
+     @endif
+
+
+ ========================================================================
+ 
+
