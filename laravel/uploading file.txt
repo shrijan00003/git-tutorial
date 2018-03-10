@@ -1,0 +1,54 @@
+==========================uploading file in laravel====================
+ADD FILE UPLOAD IN FORM 
+---------------------
+#{!! Form::open(['action'=>'postscontroller@store','method'=>'POST','enctype'=>'multipart/data']) !!}
+This is the general rule that if we want to use file upload then we should include enctype property to the form declaration 
+and we can simply add laravel component for using upload button like 
+#{{Form::file('cover_image')}}
+-----------------------
+This will provide the UI for uploading file but when we save it, it will not perfomr anything 
+----------------------
+ADD COLUMN TO POST TABLE
+--------------------
+creating another migration 
+---------------------
+#$ php artisan make:migration add_cover_image_to_posts
+This will create a new migration on the migration table..
+we we have to add column with migration file with up and down method like 
+--------------------------
+public function up()
+    {
+        //
+        Schema::table('posts',function($table){
+            $table->string('cover_image');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+        Schema::table('posts',function($table){
+            $table->dropColumn('cover_image');
+        });
+    }
+--------------------------------------
+all we have to run in artisan command for it 
+-------------------------------------
+#php artisan migrate
+
+Migrating: 2018_03_08_033550_add_cover_image_to_posts
+Migrated:  2018_03_08_033550_add_cover_image_to_posts
+------------------------------------------
+
+UPLOAD FILE TO FOLDER AND PATH TO DATABSE
+----------------------------------------
+
+i will complete this very soon...
+
+
+

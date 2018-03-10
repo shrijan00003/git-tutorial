@@ -1,0 +1,41 @@
+==============simple authentication in laravel==============
+We can use middleware (auth) for simple access control
+we can avoid other user to view edit and delete button on view we can simply use the if else condition as 
+---------------------
+@if(!Auth::guest())
+      @if(Auth::user()->id==$post->user_id)
+            <a href="/posts/{{$post->id}}/edit" class="btn btn-primary">Edit</a>
+
+            {!! Form::open(['action'=>['postscontroller@destroy',$post->id],'method'=>'POST','class'=>'pull-right']) !!}
+            {{ Form::hidden('_method','DELETE') }}
+            {{Form::submit('Delete',['class'=>'btn btn-danger'])}}
+            {!! Form::close() !!}
+        @endif
+    @endif 
+---------------------
+Explanation:
+ if the user is not a guest he/she cannot see the edit and elete button
+ and in the second if statement we are comparing the user id for that post and the logged in user id; if both of them are 
+ same then they can find the buttons 
+ 
+ ------------------------
+ but till now we can access the edit through url like (http://bookntrip.com/posts/8/edit)
+ to avoid this we have to check user in the controller .. in our case in postscontroller
+ in edit function 
+  -------------------
+    $post= Post::find($id);
+  //check for the correct user
+        if(auth()->user()->id!==$post->user_id){
+            return redirect('/posts')->with('error','Unauthorized Page');
+        }
+        return view('posts.edit')->with('post',$post);
+ ------------------------
+ Explanation
+   -As we are in the controller we can use auth() method directly 
+   -if the logged in user and the post user_id is not same then we are redirecting the user to the post controller 
+    with an error message.
+   -if the post creater and the logged in person is same he/she will be passed to the view needed.
+-------------------------------
+same thing we can do for the destroy function just like it to avoid other users to delete the post forcefully.
+------------------------------
+

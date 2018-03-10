@@ -1,0 +1,189 @@
+=================================================================
+HOW TO MAKE CONTROLLER WITH RESOURCES WITH ALL NECESSARY FUNCTIONS
+-----------------------------------------------------------------
+#php artisan make:controller PostsController --resource 
+
+This will create a controller with all the NECESSARY FUNCTIONS like 
+1. index
+2. create
+3. store 
+4. show
+5. edit 
+6. update
+7. destroy
+
+
+-------------------------------------------------------------------
+ARTISAN FOR SHOWING ALL ROUTES WE HAVE 
+-------------------------------------------------------------------
+#php artisan route:list
+
+-------------------------------------------------------------------
+FOR MAKING ROUTES FOR ALL THE FUNCTIONS OF THE CONTROLLER 
+-------------------------------------------------------------------
+#Route::resource('posts','postscontroller');
+WHERE posts will be the route with different parameters of the functions of postscontroller
+like below 
+$ php artisan route:list
++--------+-----------+-------------------+---------------+-----------------------------------------------+--------------+
+| Domain | Method    | URI               | Name          | Action                                        | Middleware   |
++--------+-----------+-------------------+---------------+-----------------------------------------------+--------------+
+|        | GET|HEAD  | /                 |               | App\Http\Controllers\pagescontroller@index    | web          |
+|        | GET|HEAD  | about             |               | App\Http\Controllers\pagescontroller@about    | web          |
+|        | GET|HEAD  | api/user          |               | Closure                                       | api,auth:api |
+|        | GET|HEAD  | posts             | posts.index   | App\Http\Controllers\postscontroller@index    | web          |
+|        | POST      | posts             | posts.store   | App\Http\Controllers\postscontroller@store    | web          |
+|        | GET|HEAD  | posts/create      | posts.create  | App\Http\Controllers\postscontroller@create   | web          |
+|        | GET|HEAD  | posts/{post}      | posts.show    | App\Http\Controllers\postscontroller@show     | web          |
+|        | PUT|PATCH | posts/{post}      | posts.update  | App\Http\Controllers\postscontroller@update   | web          |
+|        | DELETE    | posts/{post}      | posts.destroy | App\Http\Controllers\postscontroller@destroy  | web          |
+|        | GET|HEAD  | posts/{post}/edit | posts.edit    | App\Http\Controllers\postscontroller@edit     | web          |
+|        | GET|HEAD  | services          |               | App\Http\Controllers\pagescontroller@services | web          |
++--------+-----------+-------------------+---------------+-----------------------------------------------+--------------+
+
+
+-------------------------------------------------------------------------
+=========================================================================
+working with Model
+-------------------------------------------------------------------------
+    //table name
+    protected $table='posts';
+    //primary key
+    public $primaryKey='id';
+    //Timestamps
+    public $timestamps=true;
+
+we can specify these things in model to change the default name and primary key of table 
+since we will be working with Eloquent we will be dealing with Model and not to db... 
+-------------------------------------------------------------------------
+FOR USING Eloquent WE HAVE TO USE THE MODEL TO THE CONTROLLER
+#use App\Post;
+AFTER THAT WE CAN SIMPLY USE ALL THE COMMANDS LIKE 
+#Post::all() 
+for fetching all the data from table and others..
+--------------------------------------------------------------------------
+====================================================================
+USING DB LIBRARY FOR SQL 
+--------------------------
+#use DB;
+$post=DB::select('SELECT * FROM posts');
+----------------------------------------------------------------------
+LIMIT
+we can get the limit with the function ->take() 
+#$post=Post::orderBy('title','desc')->take(1)->get();
+---------------------------------------------------------------------
+
+===========================================================
+PAGINATION
+===========================================================
+The pagination is much simpler in the laravel 
+#$post=Post::orderBy('title','desc')->paginate(1);
+#return view('posts.index')->with('posts',$post);
+And in the index.blade.php or any view that you want to show your pagination
+#{{$posts->links()}}
+
+Thats it :) 
+===========================================================
+FORM TO ADD AND STORE data
+-----------------------------------------------------------
+FOR USING FORM HELPER WE HAVE TO GET IT FROM LARAVEL COLLECTIVE 
+installation guide is in laravel documentation
+link :https://laravelcollective.com/docs/master/html
+
+-----------------------------------------------------------
+===========================================================
+IMPLEMENTING EDITOR IN TEXT AREA (CKEDITOR)
+-----------------------------------------------
+link:https://github.com/UniSharp/laravel-ckeditor
+
+
+=======================================================
+PARSING THE HTML WILL
+------------------------
+{!! $post->body !!}
+instead of using {{}} this will not parse the html..
+
+------------------------------------------------------
+================HOW TO MAKE PUT OR PATCH REQUEST==============
+we know that we have to use put or patch request for the update method in any web application or in api call,but
+we can not write PUT or PATCH directly in the method section of the form. So that laravel provide the mechanism to 
+use method with hidden field on the form. 
+#{{Form::hidden('_method','PUT')}}
+
+
+--------------------------------------------------------------------
+Delete method is performed with form not with the simple route like edit
+---------------------------------------------------------------------
+{!! Form::open(['action'=>['postscontroller@destroy',$post->id],'method'=>'POST','class'=>'pull-right']) !!}
+    {{ Form::hidden('_method','DELETE') }}
+    {{Form::submit('Delete',['class'=>'btn btn-danger'])}}
+    {!! Form::close() !!}
+
+------------------------------------------------------------------------------
+Single Authorization 
+=====================================
+laravel by default provide the authentication for the users..
+for using it.. we just have to use the artisan command as
+#php artisan make:auth
+
+-it will create new route to home with HomeController
+-it will create the app.blade.php with navbar and link to register and login
+-it will also create the HomeController and home.blade.php as a view 
+-it uses all Controller in Auth The auth folder.
+-we can modify it according to our needs..
+
+
+=================================================================
+Adding User Id to the post table so that we can link them 
+-----------------------------------------------------------
+making migration for that -we should be very specific for the name 
+##php artisan make:migration add_user_id_to_posts##
+
+It will create a blank migration in database folder and we have to edit it manually
+ public function up()
+    {
+        Schema::table('posts',function($table){
+            $table->integer('user_id');
+        });
+    }
+---------------------------------------------------------------
+public function down()
+    {
+        Schema::table('posts',function($table){
+            $table->dropColumn('user_id');
+        });
+    }
+------------------------------------------------------------------
+#php artisan migrate 
+------------------------------------------------------------------
+
+Saving user_id from store function in post controller 
+--------------------------------------------------
+
+===================================================
+Setting up relationship
+--------------------------------------------------
+setting up relationship is also much simpler in laravel
+----------
+insdie Post Model we will be creating a function
+----------
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
